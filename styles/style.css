@@ -23,3 +23,33 @@ body {
     height: 100%;
     margin: 0;
 }
+
+.container {
+    display: table;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.row {
+    display: table-row;
+    width: 100%;
+}
+
+.grid {
+    display: table-cell;
+    border: 1px solid #ddd;
+    height: 30px;
+    border-radius: 2px;
+}
+.grid:hover {
+    background: #eee;
+}
+.grid {
+    outlineß: none;
+}
+
+.row:nth-child(20) .grid:nth-child(20) {
+    border-radius: 100%;
+    background: #ddd;
+}
+
