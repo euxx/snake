@@ -6,22 +6,26 @@ $(function() {
 		switch (event.which) {
 			case 37:
 			event.preventDefault();
-			console.log("left");
+			snake.direction = "Left";
+			console.log(snake.direction);
 			break;
 			case 38:
 			event.preventDefault();
-			console.log("up");
+			snake.direction = "Up";
+			console.log(snake.direction);
 			break;
 			case 39:
 			event.preventDefault();
-			console.log("right");
+			snake.direction = "Right";
+			console.log(snake.direction);
 			break;
 			case 40:
 			event.preventDefault();
-			console.log("down");
+			snake.direction = "Down";
+			console.log(snake.direction);
 			break;
 			default:
-			console.log("Excuse me");
+			console.log("Excuse me? " + event.which);
 		}
 	});
 });
@@ -45,3 +49,7 @@ let snake = {
 };
 
 let currentPos = [[20, 20]];
+
+function setTimeout(time) {
+
+}
