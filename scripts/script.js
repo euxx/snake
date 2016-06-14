@@ -2,14 +2,18 @@
 $(function() {
 
 	render(40);
+
 	position(snake.position);
 
 	$(document).keydown(keys);
 
 	let gameOver = false;
 	while (!gameOver) {
+
 		setTimeout(move, 1000);
-		setTimeout(eat, 4000);
+
+		setTimeout(move, 2000);
+
 		gameOver = true;
 	}
 
@@ -64,6 +68,27 @@ let food = {
 };
 
 function move() {
+	let cpx = currentPos[0][1];
+	let cpy = currentPos[0][0];
+	switch(snake.direction) {
+		case "l":
+		cpx = cpx - 1;
+		break;
+		case "r":
+		cpx = cpx + 1;
+		break;
+		case "u":
+		cpy = cpy + 1;
+		break;
+		case "d":
+		cpy = cpy - 1;
+		break;
+		default:
+		break;
+	}
+	currentPos[0][1] = cpx;
+	currentPos[0][0] = cpy;
+	position(snake.position);
 	console.log("New turn");
 }
 
