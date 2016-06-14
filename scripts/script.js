@@ -1,3 +1,4 @@
+
 $(function() {
 
 	render(40);
@@ -5,6 +6,7 @@ $(function() {
 	$(document).keydown(keys);
 
 	setTimeout(move, 100);
+
 });
 
 function render(gridNum) {
@@ -21,29 +23,26 @@ function render(gridNum) {
 }
 
 function keys(event) {
-	switch (event.which) {
-		case 37:
+	if([37, 38, 39, 40].indexOf(event.which) > -1) {
 		event.preventDefault();
-		snake.direction = "Left";
+
+		switch (event.which) {
+			case 37:
+			snake.direction = "l";
+			break;
+			case 38:
+			snake.direction = "u";
+			break;
+			case 39:
+			snake.direction = "r";
+			break;
+			case 40:
+			snake.direction = "d";
+			break;
+			default:
+			console.log("Excuse me? " + event.which);
+		}
 		console.log(snake.direction);
-		break;
-		case 38:
-		event.preventDefault();
-		snake.direction = "Up";
-		console.log(snake.direction);
-		break;
-		case 39:
-		event.preventDefault();
-		snake.direction = "Right";
-		console.log(snake.direction);
-		break;
-		case 40:
-		event.preventDefault();
-		snake.direction = "Down";
-		console.log(snake.direction);
-		break;
-		default:
-		console.log("Excuse me? " + event.which);
 	}
 }
 
