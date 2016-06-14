@@ -2,10 +2,16 @@
 $(function() {
 
 	render(40);
+	position(snake.position);
 
 	$(document).keydown(keys);
 
-	setTimeout(move, 100);
+	let gameOver = false;
+	while (!gameOver) {
+		setTimeout(move, 1000);
+		setTimeout(eat, 4000);
+		gameOver = true;
+	}
 
 });
 
@@ -47,12 +53,30 @@ function keys(event) {
 }
 
 let snake = {
-	position: [20, 20],
+	position: [[4, 20]],
 	direction: "r"
 };
 
-let currentPos = [[20, 20]];
+let currentPos = snake.position;
+
+let food = {
+	position: [[Math.floor(Math.random()*40 + 1), Math.floor(Math.random()*40 + 1)]]
+};
 
 function move() {
 	console.log("New turn");
+}
+
+function eat() {
+	console.log("Got you");
+}
+
+function position(posArray) {
+	let i = 0;
+	for ( ; i < posArray.length; i++) {
+		const x = posArray[i][0];
+		const y = posArray[i][1];
+		$(".row").eq(x).find(".grid").eq(y).addClass("snake-body");
+	}
+	// $(".row:nth-child(" + x + ") .grid:nth-child(" + y + ")").addClass("test");
 }

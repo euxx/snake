@@ -46,7 +46,11 @@ body {
 }
 
 .row:nth-child(20) .grid:nth-child(20) {
-    border-radius: 100%;
+    /*border-radius: 100%;
+    background: #ddd;*/
+}
+
+.snake-body {
     background: #ddd;
 }
 
