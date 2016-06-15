@@ -38,11 +38,11 @@ body {
 .grid {
     display: table-cell;
     border: 1px solid #ddd;
-    height: 30px;
+    height: 20px;
     border-radius: 2px;
 }
 .grid:hover {
-    background: #eee;
+
 }
 
 .row:nth-child(20) .grid:nth-child(20) {
@@ -55,6 +55,6 @@ body {
 }
 
 .food {
-    background: #666;
+    background: #bbb;
 }
 

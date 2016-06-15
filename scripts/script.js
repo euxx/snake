@@ -3,7 +3,7 @@ $(function() {
 
 	render(40);
 
-	positionDisplay(snake.position);
+	snakeDisplay(currentPos);
 
 	move();
 
@@ -22,7 +22,17 @@ function render(gridNum) {
 	}
 }
 
-function keys(event) {
+function gamePause(event) {
+	if (enent.which === 32) {
+		event.preventDefault();
+		if(move().paused == true) {
+			move().p
+			console.log("Have a rest");
+		}
+	}
+}
+
+function directionControl(event) {
 	if ([37, 38, 39, 40].indexOf(event.which) > -1) {
 		event.preventDefault();
 
@@ -77,7 +87,7 @@ let currentPos = snake.position;
 let currentDir = snake.direction;
 
 let food = {
-	position: [[Math.floor(Math.random()*40 + 1), Math.floor(Math.random()*40 + 1)]]
+	position: [Math.floor(Math.random()*40 + 1), Math.floor(Math.random()*40 + 1)]
 };
 let foodPos = food.position;
 
@@ -86,8 +96,8 @@ let cpy = currentPos[0][1];
 
 function move() {
 	if (cpy < 1 || cpy > 38 || cpx < 1 ||cpx > 38) {
-		// positionDisplay([[cpx, cpy]]);
-		alert("Game over ):");
+		// snakeDisplay([[cpx, cpy]]);
+		console.log("Game over ):");
 		return;
 	}
 	switch (currentDir) {
@@ -106,18 +116,31 @@ function move() {
 		default:
 		break;
 	}
+	currentPos[0][0] = cpx;
+	currentPos[0][1] = cpy;
+	if (currentPos[0][0] == foodPos[0] &&
+		  currentPos[0][1] == foodPos[1]) {
+		currentPos.push(currentPos);
+	}
 	$(".grid").removeClass("snake-body");
-	positionDisplay([[cpx, cpy]]);
-	$(document).keydown(keys);
-	setTimeout(move, 1000);
+	currentPos[1] = currentPos[0];
+	snakeDisplay(currentPos);
+	foodDisplay(foodPos);
+	$(document).keydown(directionControl);
+	setTimeout(move, 400);
 	console.log("New turn");
 }
 
 function eat() {
+	foodDisplay(foodPos);
 	console.log("Got you");
 }
 
-function positionDisplay(posArray) {
+function foodDisplay(posArray) {
+		$(".row").eq(foodPos[0]).find(".grid").eq(foodPos[1]).addClass("food");
+}
+
+function snakeDisplay(posArray) {
 	let i = 0;
 	for ( ; i < posArray.length; i++) {
 		const x = posArray[i][0];
