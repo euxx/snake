@@ -1,4 +1,3 @@
-
 $(function() {
 
 	render(40);
@@ -7,15 +6,21 @@ $(function() {
 
 	$(document).keydown(keys);
 
-	let gameOver = false;
-	while (!gameOver) {
+	// let gameOver = false;
+	// while (!gameOver) {
+	// 	let i = 10;
+	// while (i > 0 ) {
 
-		setTimeout(move, 1000);
+	// 	setTimeout(move, 1000);
 
-		setTimeout(move, 2000);
+	// 	setTimeout(headMove, 2000);
 
-		gameOver = true;
-	}
+		turn();
+
+		// gameOver = true;
+	// 	i--;
+
+	// }
 
 });
 
@@ -36,23 +41,28 @@ function keys(event) {
 	if([37, 38, 39, 40].indexOf(event.which) > -1) {
 		event.preventDefault();
 
-		switch (event.which) {
-			case 37:
-			snake.direction = "l";
-			break;
-			case 38:
-			snake.direction = "u";
-			break;
-			case 39:
-			snake.direction = "r";
-			break;
-			case 40:
-			snake.direction = "d";
-			break;
-			default:
-			console.log("Excuse me? " + event.which);
+		if (currentDirNum != event.which ) {
+			switch (event.which) {
+				case 37:
+				currentDir = "l";
+				break;
+				case 38:
+				currentDir = "u";
+				break;
+				case 39:
+				currentDir = "r";
+				break;
+				case 40:
+				currentDir = "d";
+				break;
+				default:
+				break;
+			}
+			console.log(currentDir);
 		}
-		console.log(snake.direction);
+
+	} else {
+		console.log("Excuse me? " + event.which);
 	}
 }
 
@@ -62,34 +72,77 @@ let snake = {
 };
 
 let currentPos = snake.position;
+let currentDir = snake.direction;
+
+let currentDirNum;
+switch (currentDir) {
+	case "l":
+	currentDirNum = 37;
+	break;
+	case "u":
+	currentDirNum = 38;
+	break;
+	case "r":
+	currentDirNum = 39;
+	break;
+	case "d":
+	currentDirNum = 40;
+	break;
+	default:
+	break;
+}
 
 let food = {
 	position: [[Math.floor(Math.random()*40 + 1), Math.floor(Math.random()*40 + 1)]]
 };
 
+let cpx = currentPos[0][0];
+let cpy = currentPos[0][1];
+function turn() {
+	let i = 0;
+	if (i < 10) {
+		setTimeout(function() {
+			switch(snake.direction) {
+				case "r":
+				cpy = cpy + 1;
+				break;
+				default:
+				break;
+			}
+			position([[cpx, cpy]]);
+			i++
+			turn();
+		}, 2000);
+	}
+}
+
 function move() {
-	let cpx = currentPos[0][1];
-	let cpy = currentPos[0][0];
+	console.log("New turn");
+}
+
+function headMove() {
+	let cpx = currentPos[0][0];
+	let cpy = currentPos[0][1];
 	switch(snake.direction) {
 		case "l":
-		cpx = cpx - 1;
-		break;
-		case "r":
-		cpx = cpx + 1;
-		break;
-		case "u":
 		cpy = cpy + 1;
 		break;
+		case "r":
+		cpy = cpy + 1;
+		break;
+		case "u":
+		cpx = cpx + 1;
+		break;
 		case "d":
-		cpy = cpy - 1;
+		cpx = cpx + 1;
 		break;
 		default:
 		break;
 	}
-	currentPos[0][1] = cpx;
-	currentPos[0][0] = cpy;
-	position(snake.position);
-	console.log("New turn");
+	position([[cpx, cpy]]);
+	// currentPos[0][1] = cpy;
+	// currentPos[0][0] = cpx;
+	// position(snake.position);
 }
 
 function eat() {
