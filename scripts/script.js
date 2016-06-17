@@ -4,6 +4,7 @@ $(function() {
 	render(40);
 
 	snakeDisplay(currentPos);
+	foodDisplay(foodPos);
 
 	move();
 
@@ -35,7 +36,7 @@ function gamePause(event) {
 function directionControl(event) {
 	if ([37, 38, 39, 40].indexOf(event.which) > -1) {
 		event.preventDefault();
-
+		let keyWhich;
 		switch (event.which) {
 			case 37:
 			keyWhich = "l";
@@ -79,27 +80,36 @@ function directionControl(event) {
 }
 
 let snake = {
-	position: [[4, 20]],
+	position: [[4, 20], [4, 18]],
 	direction: "r"
 };
-
 let currentPos = snake.position;
 let currentDir = snake.direction;
 
 let food = {
-	position: [Math.floor(Math.random()*40 + 1), Math.floor(Math.random()*40 + 1)]
+	position: foodxy()
 };
 let foodPos = food.position;
+
+function foodxy() {
+	return  [Math.floor(Math.random()*40 + 1), Math.floor(Math.random()*40 + 1)];
+}
 
 let cpx = currentPos[0][0];
 let cpy = currentPos[0][1];
 
 function move() {
 	if (cpy < 1 || cpy > 38 || cpx < 1 ||cpx > 38) {
-		// snakeDisplay([[cpx, cpy]]);
 		console.log("Game over ):");
 		return;
 	}
+
+	let i = 1;
+	for ( ; i < currentPos.length; i++) {
+		// currentPos[i] = currentPos[i - 1];
+	}
+	console.log(currentPos[0] + "  " + currentPos[1]);
+
 	switch (currentDir) {
 		case "l":
 		cpy = cpy - 1;
@@ -116,24 +126,19 @@ function move() {
 		default:
 		break;
 	}
+
 	currentPos[0][0] = cpx;
 	currentPos[0][1] = cpy;
-	if (currentPos[0][0] == foodPos[0] &&
-		  currentPos[0][1] == foodPos[1]) {
-		currentPos.push(currentPos);
+	console.log(currentPos[0] + "  " + currentPos[1]);
+	if (cpx == foodPos[0] && cpy == foodPos[1]) {
+		console.log("Got you");
+		currentPos.push(currentPos[0]);
 	}
-	$(".grid").removeClass("snake-body");
-	currentPos[1] = currentPos[0];
+
 	snakeDisplay(currentPos);
-	foodDisplay(foodPos);
 	$(document).keydown(directionControl);
 	setTimeout(move, 400);
 	console.log("New turn");
-}
-
-function eat() {
-	foodDisplay(foodPos);
-	console.log("Got you");
 }
 
 function foodDisplay(posArray) {
@@ -141,6 +146,7 @@ function foodDisplay(posArray) {
 }
 
 function snakeDisplay(posArray) {
+	$(".grid").removeClass("snake-body");
 	let i = 0;
 	for ( ; i < posArray.length; i++) {
 		const x = posArray[i][0];
