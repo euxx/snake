@@ -91,10 +91,6 @@ let food = {
 };
 let foodPos = food.position;
 
-function foodxy() {
-	return  [Math.floor(Math.random()*40 + 1), Math.floor(Math.random()*40 + 1)];
-}
-
 let cpx = currentPos[0][0];
 let cpy = currentPos[0][1];
 
@@ -132,6 +128,9 @@ function move() {
 	console.log(currentPos[0] + "  " + currentPos[1]);
 	if (cpx == foodPos[0] && cpy == foodPos[1]) {
 		console.log("Got you");
+		$(".grid").removeClass("food");
+		foodPos = foodxy();
+		foodDisplay(foodPos);
 		currentPos.push(currentPos[0]);
 	}
 
@@ -139,6 +138,10 @@ function move() {
 	$(document).keydown(directionControl);
 	setTimeout(move, 400);
 	console.log("New turn");
+}
+
+function foodxy() {
+	return  [Math.floor(Math.random()*40 + 1), Math.floor(Math.random()*40 + 1)];
 }
 
 function foodDisplay(posArray) {
