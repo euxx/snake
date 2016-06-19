@@ -102,7 +102,8 @@ function move() {
 
 	let i = 1;
 	for ( ; i < currentPos.length; i++) {
-		// currentPos[i] = currentPos[i - 1];
+		let x = currentPos[i - 1];
+		currentPos[i] = x;
 	}
 	console.log(currentPos[0] + "  " + currentPos[1]);
 
@@ -128,7 +129,6 @@ function move() {
 	console.log(currentPos[0] + "  " + currentPos[1]);
 	if (cpx == foodPos[0] && cpy == foodPos[1]) {
 		console.log("Got you");
-		$(".grid").removeClass("food");
 		foodPos = foodxy();
 		foodDisplay(foodPos);
 		currentPos.push(currentPos[0]);
@@ -145,6 +145,7 @@ function foodxy() {
 }
 
 function foodDisplay(posArray) {
+		$(".grid").removeClass("food");
 		$(".row").eq(foodPos[0]).find(".grid").eq(foodPos[1]).addClass("food");
 }
 
