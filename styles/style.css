@@ -31,22 +31,17 @@ body {
 
 .row {
     display: table-row;
-    width: 900px;
+    width: 700px;
 }
 
 .grid {
     display: table-cell;
     border: 1px solid #ddd;
-    height: 17px;
+    height: 15px;
     border-radius: 2x;
 }
 .grid:hover {
 
-}
-
-.row:nth-child(20) .grid:nth-child(20) {
-    /*border-radius: 100%;
-    background: #ddd;*/
 }
 
 .snake-body {
