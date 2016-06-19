@@ -25,13 +25,18 @@ body {
 }
 
 .container {
+    width: 700px;
+    margin: 0 auto;
+}
+
+.box {
     display: table;
-    width: 100%;
+    width: 700px;
+    margin: 10px auto;
 }
 
 .row {
     display: table-row;
-    width: 700px;
 }
 
 .grid {
@@ -50,5 +55,16 @@ body {
 
 .food {
     background: #bbb;
+}
+
+h4 {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+p {
+    text-align: right;
+    padding-right: 5px;
+    margin: 0;
 }
 
