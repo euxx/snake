@@ -27,7 +27,6 @@ function gamePause(event) {
 	if (enent.which === 32) {
 		event.preventDefault();
 		if(move().paused == true) {
-			move().p
 			console.log("Have a rest");
 		}
 	}
@@ -47,11 +46,9 @@ function directionControl(event) {
 		} else if (key === 40 && currentDir != "d") {
 			currentDir = "d";
 		}
-		console.log(currentDir);
-
-	} else {
+	} /*else {
 		console.log("Excuse me? " + event.which);
-	}
+	}*/
 }
 
 let snake = {
@@ -65,9 +62,6 @@ let food = {
 	position: foodxy()
 };
 let foodPos = food.position;
-
-let cpx = currentPos[0][0];
-let cpy = currentPos[0][1];
 
 function foodxy() {
   const xy = [Math.floor(Math.random()*38) + 2, Math.floor(Math.random()*38) + 2]
@@ -91,16 +85,20 @@ function snakeDisplay(posArray) {
 	}
 }
 
+let cpx = currentPos[0][0];
+let cpy = currentPos[0][1];
 function move() {
+	let lastPos = currentPos;
 	if (cpy < 1 || cpy > 39 || cpx < 1 ||cpx > 39) {
 		console.log("Game over ):");
+		snakeDisplay(lastPos);
 		return;
 	}
 
-	let lastPos = currentPos[currentPos.length - 1];
-	lastPos = [lastPos[0], lastPos[1]];
-
 	let i = currentPos.length;
+	let tailPos = currentPos[i - 1];
+	tailPos = [tailPos[0], tailPos[1]];
+
 	for ( ; i > 1; i--) {
 		currentPos[i - 1][0] = currentPos[i - 2][0];
 		currentPos[i - 1][1] = currentPos[i - 2][1];
@@ -122,14 +120,14 @@ function move() {
 		default:
 		break;
 	}
-
 	currentPos[0][0] = cpx;
 	currentPos[0][1] = cpy;
+
 	if (cpx == foodPos[0] && cpy == foodPos[1]) {
 		console.log("Got you");
 		foodPos = foodxy();
 		foodDisplay(foodPos);
-		currentPos.push(lastPos);
+		currentPos.push(tailPos);
 	}
 
 	snakeDisplay(currentPos);
