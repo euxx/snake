@@ -23,6 +23,19 @@ function move() {
 	let tailPos = currentPos[i - 1];
 	tailPos = [tailPos[0], tailPos[1]];
 
+	for ( ; i > 0; i--) {
+		let j = i - 1;
+		for ( ; j > 0; j-- ) {
+			if(currentPos[i - 1][0] === currentPos[j - 1][0] &&
+				 currentPos[i - 1][1] === currentPos[j - 1][1]) {
+				console.log("Game over ):");
+				snakeDisplay(lastPos);
+				return;
+			}
+		}
+	}
+
+	i = currentPos.length;
 	for ( ; i > 1; i--) {
 		currentPos[i - 1][0] = currentPos[i - 2][0];
 		currentPos[i - 1][1] = currentPos[i - 2][1];
@@ -48,12 +61,12 @@ function move() {
 	currentPos[0][1] = cpy;
 
 	if (cpx == foodPos[0] && cpy == foodPos[1]) {
-		console.log("Got you");
 		foodPos = foodxy();
 		foodDisplay(foodPos);
 		currentPos.push(tailPos);
 		count++;
 		score(count);
+		console.log("Got you");
 	}
 
 	snakeDisplay(currentPos);
@@ -99,13 +112,13 @@ function directionControl(event) {
 		event.preventDefault();
 
 		const key = event.which;
-		if (key === 37 && currentDir != "l") {
+		if (key === 37 && currentDir != "r") {
 			currentDir = "l";
-		} else if (key === 38 && currentDir != "u") {
+		} else if (key === 38 && currentDir != "d") {
 			currentDir = "u";
-		} else if (key === 39 && currentDir != "r") {
+		} else if (key === 39 && currentDir != "l") {
 			currentDir = "r";
-		} else if (key === 40 && currentDir != "d") {
+		} else if (key === 40 && currentDir != "u") {
 			currentDir = "d";
 		}
 	} /*else {
@@ -128,8 +141,15 @@ let food = {
 let foodPos = food.position;
 
 function foodxy() {
-  const xy = [Math.floor(Math.random()*38) + 2, Math.floor(Math.random()*38) + 2]
-	console.log("food  " + xy);
+  const xy = [Math.floor(Math.random()*38) + 2, Math.floor(Math.random()*38) + 2];
+  let i = 0;
+  const l = currentPos.length;
+  for ( ; i < l; i++ ) {
+  	if(currentPos[i] === xy) {
+  		foodxy();
+  	}
+  }
+ 	console.log("food  " + xy);
 	return xy;
 }
 
