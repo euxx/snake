@@ -12,10 +12,9 @@ $(function() {
 });
 
 function move() {
-	let lastPos = currentPos;
+
 	if (cpy < 1 || cpy > 39 || cpx < 1 ||cpx > 39) {
 		console.log("Game over ):");
-		snakeDisplay(lastPos);
 		return;
 	}
 
@@ -23,7 +22,7 @@ function move() {
 	let tailPos = currentPos[i - 1];
 	tailPos = [tailPos[0], tailPos[1]];
 
-	for ( ; i > 0; i--) {
+	for ( ; i > 0 ; i--) {
 		let j = i - 1;
 		for ( ; j > 0; j-- ) {
 			if(currentPos[i - 1][0] === currentPos[j - 1][0] &&
@@ -33,12 +32,11 @@ function move() {
 				return;
 			}
 		}
-	}
 
-	i = currentPos.length;
-	for ( ; i > 1; i--) {
-		currentPos[i - 1][0] = currentPos[i - 2][0];
-		currentPos[i - 1][1] = currentPos[i - 2][1];
+		if (i > 1) {
+			currentPos[i - 1][0] = currentPos[i - 2][0];
+			currentPos[i - 1][1] = currentPos[i - 2][1];
+		}
 	}
 
 	switch (currentDir) {
@@ -145,7 +143,7 @@ function foodxy() {
   let i = 0;
   const l = currentPos.length;
   for ( ; i < l; i++ ) {
-  	if(currentPos[i] === xy) {
+  	if(currentPos[i][0] === xy[0] && currentPos[i][1] === xy[1]) {
   		foodxy();
   	}
   }
